@@ -15,8 +15,14 @@ app.use(helmet());
 
 // CORS — allow the React frontend on port 5173
 app.use(cors({
-  origi: ["https://cloud-kitchen-frontend-beige.vercel.app/"],
-  credentials: true,
+  origin: [
+    'https://cloud-kitchen-frontend-beige.vercel.app', // Your exact live frontend domain
+    'http://localhost:5173',                           // Keeps it working for your local testing
+    'http://localhost:3000'                            // Alternative local port just in case
+  ],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true // Allow cookies/headers if your app uses authentication sessions
 }));
 
 // Body parsing
