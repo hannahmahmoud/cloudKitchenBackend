@@ -13,17 +13,19 @@ let app = express();
 // Security headers
 app.use(helmet());
 
-// CORS — allow the React frontend on port 5173
-app.use(cors({
+const corsOptions = {
   origin: [
-    'https://cloud-kitchen-frontend-beige.vercel.app', // Your exact live frontend domain
-    'http://localhost:5173',                           // Keeps it working for your local testing
-    'http://localhost:3000'                            // Alternative local port just in case
+    'https://cloud-kitchen-frontend-beige.vercel.app',
+    'http://localhost:5173',
+    'http://localhost:3000'
   ],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true // Allow cookies/headers if your app uses authentication sessions
-}));
+  credentials: true
+};
+
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
 
 // Body parsing
 app.use(express.json({ limit: '20kb' }));
